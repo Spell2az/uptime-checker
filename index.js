@@ -1,8 +1,7 @@
 const http = require("http");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
-
-const port = 8080;
+const config = require("./config");
 
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
@@ -45,13 +44,14 @@ const server = http.createServer((req, res) => {
       res.setHeader("Content-Type", "application/json");
       res.writeHead(statusCode);
       res.end(payloadString);
-      console.log(statusCode, payloadString);
     });
   });
 });
 
-server.listen(port, err => {
-  console.log(`Server is listening on port: ${port}`);
+server.listen(config.port, err => {
+  console.log(
+    `Server is listening on port: ${config.port} in ${config.envName}`
+  );
 });
 
 const handlers = {
